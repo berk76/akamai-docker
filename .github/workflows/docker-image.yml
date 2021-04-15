@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: ./scripts/build-all.sh
+    - name: List Docker images  
+      run: docker images
+    - name: Tag Docker image  
+      run: docker image tag akamai/shell:latest berk76/akamai-docker:1.0.2-snapshot
+    - name: Docker Hub Login
+      run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Push
+      run: docker push berk76/akamai-docker:1.0.2-snapshot
