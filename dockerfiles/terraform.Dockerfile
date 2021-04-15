@@ -23,8 +23,8 @@ ARG BASE=akamai/base
 #########
 
 FROM alpine:3.12 as builder
-ARG TERRAFORM_VERSION=0.13.6
-ARG TERRAFORM_SHA256SUM=55f2db00b05675026be9c898bdd3e8230ff0c5c78dd12d743ca38032092abfc9
+ARG TERRAFORM_VERSION=0.15.0
+ARG TERRAFORM_SHA256SUM=69c5db7bd6d4a5d3dd060678e5c3d9442e32610ed05879b4325e6aa4807d0529
 
 # Because the builder downloads the latest akamai provider,
 # subsequent terraform init calls will download to this directory
@@ -49,7 +49,7 @@ RUN apk add --no-cache ca-certificates curl upx \
 # a new provider
 ADD files/terraform.tf /terraform.tf
 RUN mkdir -p ${TF_PLUGIN_CACHE_DIR} \
-    && terraform init -input=false -backend=false -get-plugins=true -verify-plugins=true \
+    && terraform init -input=false -backend=false -get=true \
     # find all executable files in the plugins and upx them
     && find ${TF_PLUGIN_CACHE_DIR} -type f -perm +0111 -exec upx -3 -o{}.upx {} \; \
     # for some reason, using mv at this step fails (the operation works, but file not found raised)
