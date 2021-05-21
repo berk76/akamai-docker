@@ -28,4 +28,9 @@ ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 ENV JENKINS_DOCKER_UID=1002930000
 ENV TZ=Europe/Prague
 
+# Change owner to Docker Jenkins
+RUN echo "change owner to Docker Jenkins" && \
+    chmod 777 /root && \
+    chown -R $JENKINS_DOCKER_UID:$JENKINS_DOCKER_UID /root
+
 WORKDIR /root
