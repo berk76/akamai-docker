@@ -16,8 +16,8 @@ jobs:
     - name: List Docker images  
       run: docker images
     - name: Tag Docker image  
-      run: docker image tag akamai/shell:latest berk76/akamai-docker:1.0.2-snapshot
+      run: docker image tag akamai/shell:latest berk76/akamai-docker:1.2.2-snapshot
     - name: Docker Hub Login
       run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Push
-      run: docker push berk76/akamai-docker:1.0.2-snapshot
+      run: docker push berk76/akamai-docker:1.2.2-snapshot

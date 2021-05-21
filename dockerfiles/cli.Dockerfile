@@ -51,3 +51,8 @@ RUN mkdir -p $AKAMAI_CLI_HOME/.akamai-cli ${AKAMAI_CLI_CACHE_PATH}
 COPY --from=builder /akamai.upx /bin/akamai
 
 ADD files/akamai-cli-config ${AKAMAI_CLI_HOME}/.akamai-cli/config
+
+# Change owner to Docker Jenkins
+RUN echo "change owner to Docker Jenkins" && \
+    chmod 777 $AKAMAI_CLI_HOME && \
+    chown -R $JENKINS_DOCKER_UID:$JENKINS_DOCKER_UID $AKAMAI_CLI_HOME
